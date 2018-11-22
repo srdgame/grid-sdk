@@ -36,8 +36,8 @@ end
 
 function image.update( dt )
 	for filename, i in pairs( images ) do
-		modtime, errormsg = love.filesystem.getLastModified( filename )
-		if ( errormsg == nil and modtime ~= i.modtime ) then
+		local info, errormsg = love.filesystem.getInfo( filename )
+		if ( info and info.modtime ~= i.modtime ) then
 			reloadImage( i, filename )
 		end
 	end
@@ -59,9 +59,10 @@ function image:getDrawable()
 
 	if ( not images[ filename ] ) then
 		local image = graphics.newImage( filename )
+		local info = love.filesystem.getInfo( filename ) or {}
 		images[ filename ] = {
 			image   = image,
-			modtime = love.filesystem.getLastModified( filename )
+			modtime = info.modtime
 		}
 	end
 
@@ -111,13 +112,13 @@ local function getHighResolutionVariant( filename )
 	local hrvariant = string.gsub( filename, extension, "" )
 	hrvariant       = hrvariant .. "@2x" .. extension
 
-	if ( love.filesystem.exists( hrvariant ) ) then
+	if ( love.filesystem.getInfo( hrvariant ) ) then
 		return hrvariant
 	end
 end
 
 function image:setFilename( filename )
-	if ( love.window.getPixelScale() > 1 ) then
+	if ( love.window.getDPIScale() > 1 ) then
 		local variant = getHighResolutionVariant( filename )
 		if ( variant ) then
 			filename = variant

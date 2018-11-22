@@ -43,7 +43,7 @@ end
 
 if ( _SERVER ) then
 	require( "engine.server" )
-	love.errhand = engine.server.errhand
+	love.errorhandler = engine.server.error_handler
 end
 
 -- Standard callback handlers

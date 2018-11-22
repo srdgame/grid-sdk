@@ -74,7 +74,7 @@ local function error_printer(msg, layer)
 	       tostring(msg), 1+(layer or 1)):gsub("\n[^\n]+$", "")))
 end
 
-function errhand(msg)
+function error_handler(msg)
 	msg = tostring(msg)
 
 	error_printer(msg, 2)

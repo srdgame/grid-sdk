@@ -51,7 +51,7 @@ accessor( imagepanel, "image", "imageDatum" )
 function imagepanel:setImage( image )
 	if ( type( image ) == "image" ) then
 		self.imageDatum = image
-	elseif ( image ~= nil and love.filesystem.exists( image ) ) then
+	elseif ( image ~= nil and love.filesystem.getInfo( image ) ) then
 		self.imageDatum = love.graphics.newImage( image )
 		self.imageDatum:setFilter( "linear", "linear" )
 	else

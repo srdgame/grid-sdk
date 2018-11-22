@@ -109,7 +109,7 @@ concommand( "lua_dofile", "Loads and runs the given file",
 		local dir = string.stripfilename( argS )
 		local files = love.filesystem.getDirectoryItems( dir )
 		for _, v in ipairs( files ) do
-			if ( love.filesystem.isDirectory( dir .. v ) or
+			if ( love.filesystem.getInfo( dir .. v, love.filesystem.FileType.directory ) or
 			     string.fileextension( v ) == "lua" ) then
 				local filename = ( dir ~= "" and dir or "" ) .. v
 				local cmd      = "lua_dofile " .. filename

@@ -25,7 +25,7 @@ local function onDownloadRequest( payload )
 		return
 	end
 
-	if ( not love.filesystem.exists( filename ) ) then
+	if ( not love.filesystem.getInfo( filename ) ) then
 		print( filename .. " does not exist!" )
 		return
 	end

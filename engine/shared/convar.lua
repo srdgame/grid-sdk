@@ -30,7 +30,7 @@ function convar.setConvar( name, value )
 end
 
 function convar.readConfig()
-	if ( not love.filesystem.exists( "cfg/config.cfg" ) ) then
+	if ( not love.filesystem.getInfo( "cfg/config.cfg" ) ) then
 		return
 	end
 

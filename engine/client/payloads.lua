@@ -11,7 +11,7 @@ local function onReceivePlayerInitialized( payload )
 
 	require( "engine.client.camera" )
 	camera.setParentEntity( localplayer )
-	camera.setZoom( 2 * love.window.getPixelScale() )
+	camera.setZoom( 2 * love.window.getDPIScale() )
 
 	if ( not _SERVER ) then
 		localplayer:initialSpawn()

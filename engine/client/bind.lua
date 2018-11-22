@@ -55,9 +55,9 @@ concommand( "bind", "Binds a key",
 
 function readBinds()
 	local config = "cfg/binds.cfg"
-	if ( not love.filesystem.exists( config ) ) then
+	if ( not love.filesystem.getInfo( config ) ) then
 		config = "cfg/binds_default.cfg"
-		if ( love.filesystem.exists( config ) ) then
+		if ( love.filesystem.getInfo( config ) ) then
 			love.filesystem.write(
 				"cfg/binds.cfg",
 				love.filesystem.read( config )
@@ -76,7 +76,7 @@ end
 
 function readDefaultBinds()
 	local config = "cfg/binds_default.cfg"
-	if ( not love.filesystem.exists( config ) ) then
+	if ( not love.filesystem.getInfo( config ) ) then
 		return
 	end
 

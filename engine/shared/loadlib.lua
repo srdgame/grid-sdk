@@ -19,7 +19,7 @@ local function getModuleFilename( modname )
 		for path in paths do
 			path = string.gsub( path, "%.[\\/]", "" )
 			local filename = string.gsub( path, "?", module )
-			if ( path ~= "" and love.filesystem.exists( filename ) ) then
+			if ( path ~= "" and love.filesystem.getInfo( filename ) ) then
 				return filename
 			end
 		end
@@ -38,8 +38,8 @@ function require( modname )
 
 	local filename = getModuleFilename( modname )
 	if ( filename ) then
-		local modtime, errormsg = love.filesystem.getLastModified( filename )
-		package.watched[ modname ] = modtime
+		local info, errormsg = love.filesystem.getInfo( filename )
+		package.watched[ modname ] = info and info.modtime or nil
 	else
 		package.watched[ modname ] = -1
 	end
@@ -77,8 +77,8 @@ local function reload( modname, filename )
 
 	print( err )
 
-	local modtime, errormsg = love.filesystem.getLastModified( filename )
-	package.watched[ modname ] = modtime
+	local info, errormsg = love.filesystem.getInfo( filename )
+	package.watched[ modname ] = info and info.modtime or nil
 end
 
 local function update( k, v )
@@ -91,8 +91,8 @@ local function update( k, v )
 		return
 	end
 
-	local modtime, errormsg = love.filesystem.getLastModified( filename )
-	if ( errormsg == nil and modtime ~= v ) then
+	local info, errormsg = love.filesystem.getInfo( filename )
+	if ( info and info.modtime ~= v ) then
 		reload( k, filename )
 	end
 end

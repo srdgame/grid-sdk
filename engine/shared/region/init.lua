@@ -50,7 +50,7 @@ end
 
 function region.exists( name )
 	name = string.gsub( name, "%.", "/" )
-	return love.filesystem.exists( "regions/" .. name .. ".lua" )
+	return love.filesystem.getInfo( "regions/" .. name .. ".lua" )
 end
 
 function region.findNextWorldIndex()

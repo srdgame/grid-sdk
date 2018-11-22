@@ -60,7 +60,7 @@ function bindlistpanel:onBindChange( item, key, oldKey, concommand )
 end
 
 function bindlistpanel:readBinds( binds )
-	if ( not love.filesystem.exists( "cfg/binds.lst" ) ) then
+	if ( not love.filesystem.getInfo( "cfg/binds.lst" ) ) then
 		return
 	end
 

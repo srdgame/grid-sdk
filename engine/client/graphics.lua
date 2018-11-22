@@ -12,13 +12,13 @@ local function getHighResolutionVariant( filename )
 	local extension = "." .. string.fileextension( filename )
 	local hrvariant = string.gsub( filename, extension, "" )
 	hrvariant       = hrvariant .. "@2x" .. extension
-	if ( love.filesystem.exists( hrvariant ) ) then
+	if ( love.filesystem.getInfo( hrvariant ) ) then
 		return hrvariant
 	end
 end
 
 function love.graphics.newImage( filename )
-	if ( love.window.getPixelScale() > 1 ) then
+	if ( love.window.getDPIScale() > 1 ) then
 		local variant = getHighResolutionVariant( filename )
 		if ( variant ) then
 			filename = variant

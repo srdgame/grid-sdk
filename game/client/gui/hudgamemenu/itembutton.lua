@@ -33,7 +33,7 @@ function itembutton:drawIcon()
 	love.graphics.setColor( color.white )
 	local icon = self:getIcon()
 	love.graphics.push()
-		local scale  = 2 * love.window.getPixelScale()
+		local scale  = 2 * love.window.getDPIScale()
 		local width  = icon:getWidth()
 		local height = icon:getHeight()
 		love.graphics.translate(

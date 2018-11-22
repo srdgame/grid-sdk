@@ -35,9 +35,9 @@ local function reload( filename )
 
 	local status, ret = pcall( love.audio.newSource, filename )
 	if ( status == true ) then
-		local modtime, errormsg = love.filesystem.getLastModified( filename )
+		local info, errormsg = love.filesystem.getInfo( filename )
 		sound._sounds[ filename ].sound   = ret
-		sound._sounds[ filename ].modtime = modtime
+		sound._sounds[ filename ].modtime = info.modtime
 
 		if ( game ) then
 			game.call( "client", "onReloadSound", filename )
@@ -51,8 +51,8 @@ end
 
 function sound.update( dt )
 	for k, v in pairs( sound._sounds ) do
-		local modtime, errormsg = love.filesystem.getLastModified( k )
-		if ( errormsg == nil and modtime ~= v.modtime ) then
+		local info, errormsg = love.filesystem.getInfo( k )
+		if ( info and info.modtime ~= v.modtime ) then
 			reload( k )
 		end
 	end
@@ -82,9 +82,10 @@ accessor( sound, "filename" )
 
 function sound:parse()
 	local filename = self:getFilename()
+	local info = love.filesystem.getInfo( filename ) or {}
 	sound._sounds[ filename ] = {
 		sound   = love.audio.newSource( filename ),
-		modtime = love.filesystem.getLastModified( filename )
+		modtime = info.modtime
 	}
 
 	local data = self:getData()

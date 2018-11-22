@@ -291,8 +291,8 @@ function videooptionspanel:updateMode()
 		flags.icon   = nil
 		love.window.setMode( resolution.width, resolution.height, flags )
 
-		local width  = resolution.width  * love.window.getPixelScale()
-		local height = resolution.height * love.window.getPixelScale()
+		local width  = resolution.width  * love.window.getDPIScale()
+		local height = resolution.height * love.window.getDPIScale()
 		if ( width  == love.graphics.getWidth() and
 		     height == love.graphics.getHeight() ) then
 			engine.client.resize( resolution.width, resolution.height )
@@ -362,7 +362,7 @@ function videooptionspanel:updateResolutions()
 	local name = "Resolution Drop-Down List Item"
 	local text = ""
 	local foundMode = false
-	local pixelScale = love.window.getPixelScale()
+	local pixelScale = love.window.getDPIScale()
 	local width = love.graphics.getWidth() / pixelScale
 	local height = love.graphics.getHeight() / pixelScale
 	for i, mode in ipairs( modes ) do

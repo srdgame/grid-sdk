@@ -112,7 +112,7 @@ function getAll()
 		local dir = string.gsub( module, "%.", "/" )
 		local files = love.filesystem.getDirectoryItems( dir )
 		for _, v in ipairs( files ) do
-			if ( not love.filesystem.isDirectory( dir .. v ) and
+			if ( not love.filesystem.getInfo( dir .. v, love.filesystem.FileType.directory ) and
 			     v ~= "init.lua" and
 			     v ~= "networkvar.lua" and
 			     string.fileextension( v ) == "lua" ) then
