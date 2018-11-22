@@ -86,17 +86,19 @@ function image:getData()
 		return nil
 	end
 
-	return self._image:getData()
+	return self._imageData
 end
 
 function image:refresh()
-	local image = self:getDrawable()
-	return image:refresh()
+	if self._image then
+		return self.image:replacePixels(self._imageData)
+	end
 end
 
 function image:setImageData( imageData )
+	self._imageData = imageData
 	if ( self._image ) then
-		self._image:setImageData( imageData )
+		self._image:replacePixels( imageData )
 	else
 		self._image = graphics.newImage( imageData )
 	end

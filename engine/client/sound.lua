@@ -33,7 +33,7 @@ end
 local function reload( filename )
 	print( "Updating " .. filename .. "..." )
 
-	local status, ret = pcall( love.audio.newSource, filename )
+	local status, ret = pcall( love.audio.newSource, filename, "stream" )
 	if ( status == true ) then
 		local info, errormsg = love.filesystem.getInfo( filename )
 		sound._sounds[ filename ].sound   = ret
@@ -84,7 +84,7 @@ function sound:parse()
 	local filename = self:getFilename()
 	local info = love.filesystem.getInfo( filename ) or {}
 	sound._sounds[ filename ] = {
-		sound   = love.audio.newSource( filename ),
+		sound   = love.audio.newSource( filename, "stream" ),
 		modtime = info.modtime
 	}
 
@@ -108,7 +108,7 @@ function sound:play()
 	local sound = sound._sounds[ filename ].sound
 	if ( sound:isPlaying() ) then
 		sound = sound:clone()
-		sound:rewind()
+		sound:stop()
 	end
 
 	love.audio.play( sound )
