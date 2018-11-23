@@ -87,10 +87,10 @@ function panel:createFramebuffer()
 	end
 
 	local framebuffer = love.graphics.getCanvas()
-	love.graphics.setCanvas( self.framebuffer )
-		love.graphics.clear()
-		self:draw()
-	love.graphics.setCanvas( framebuffer )
+	love.graphics.setCanvas( {self.framebuffer, stencil=true} )
+	love.graphics.clear()
+	self:draw()
+	love.graphics.setCanvas( {framebuffer, stencil=true} )
 
 	self.needsRedraw = nil
 end
